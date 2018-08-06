@@ -1,11 +1,11 @@
 import firebase from 'firebase';
 const config = {
-    apiKey: "AIzaSyBBaJIkRtF3jgzFF7BC83G6nI9joZKxezg",
-    authDomain: "doppelganger-app.firebaseapp.com",
-    databaseURL: "https://doppelganger-app.firebaseio.com",
-    projectId: "doppelganger-app",
-    storageBucket: "doppelganger-app.appspot.com",
-    messagingSenderId: "115334021919"
+    apiKey: "AIzaSyDlNGgnELFl4UELWtsokb5pzkx6Er5ZlIc",
+    authDomain: "visioncustoms-212212.firebaseapp.com",
+    databaseURL: "https://visioncustoms-212212.firebaseio.com",
+    projectId: "visioncustoms-212212",
+    storageBucket: "visioncustoms-212212.appspot.com",
+    messagingSenderId: "1035888267850"
 };
 firebase.initializeApp(config);
 export const googleProvider = new firebase.auth.GoogleAuthProvider();

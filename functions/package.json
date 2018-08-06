@@ -9,9 +9,9 @@
     "logs": "firebase functions:log"
   },
   "dependencies": {
-    "@google-cloud/vision": "^0.19.0",
-    "firebase-admin": "^5.12.1",
-    "firebase-functions": "^1.0.4",
+    "@google-cloud/vision": "^0.21.0",
+    "firebase-admin": "^5.13.1",
+    "firebase-functions": "^2.0.2",
     "promise": "^8.0.1"
   },
   "private": true

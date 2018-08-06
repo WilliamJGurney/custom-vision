@@ -6,7 +6,13 @@ let Promise = require('promise');
 admin.initializeApp(functions.config().firebase);
 const db = admin.firestore();
 
-
+// addSimilarImages function
+// firestore has feature which listens to events in database
+// this is the functions.firestore.document(‘photos/{document}’).onCreate method as follows:
+// onCreate listener allows function to be invoked when 
+// event happens
+// The syntax allows us to check for any document in the photos 
+// collection by adding .document(‘photos/{document}
 exports.addSimilarImages = functions.firestore.document('photos/{document}')
 .onCreate((snap, context) => {
 

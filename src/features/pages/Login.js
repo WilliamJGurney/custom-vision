@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { loginWithGoogle } from '../helpers/auth';
-import { firebaseAuth } from '../config/constants';
+import { loginWithGoogle } from '../../helpers/auth';
+import { firebaseAuth } from '../../config/constants';
 
 const firebaseAuthKey = 'firebaseAuthInProgress';
 const appTokenKey = 'appToken';
@@ -57,7 +57,7 @@ const styles = {
 }
 
 const LoginPage = ({ handleGoogleLogin }) => (
-
+<div>
 	<div className="login-container">
 		<div onClick={handleGoogleLogin} className="login-button">
 			<div style={styles} className="google-logo">
@@ -65,10 +65,8 @@ const LoginPage = ({ handleGoogleLogin }) => (
 			</div>
 		</div>
 	</div>	
+	</div>
 
 )
 
 const Splashscreen = () => (<p>Please Wait Loading...</p>);
-
-
-

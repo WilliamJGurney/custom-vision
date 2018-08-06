@@ -1,15 +1,16 @@
 import React, { Component } from 'react';
 import { Image, Grid, Row, Col, Modal } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import { logout } from '../helpers/auth';
+import { logout } from '../../helpers/auth';
 import FileUploader from 'react-firebase-file-uploader';
 import firebase from 'firebase';
 import { ScaleLoader } from 'react-spinners';
 
 const appTokenKey = "appToken";
-export default class Home extends Component {
+export default class Vision extends Component {
 
     constructor(props) {
+// this calls
         super(props);
 
         // check if we are on a mobile device
@@ -21,6 +22,7 @@ export default class Home extends Component {
 
         this.state = {
           allPhotos: [],
+          allLedgers: [],
           showModal: false,
           currentPhoto: '',
           isMobile: this.isMobile(),
@@ -198,6 +200,9 @@ export default class Home extends Component {
                     </Modal.Header>
                     <Modal.Body>
                       <Image style={{ width: '100%' }} src={this.state.currentPhoto} responsive />
+                      <p>
+                        Blockchain: Rules of Origin Certified
+                      </p>
 
                     </Modal.Body>
                     <Modal.Footer>
