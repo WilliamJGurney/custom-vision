@@ -10,90 +10,101 @@ let defaultStyle = {
 };
 let fakeServerData = {
 	user: {
-		name: 'David'
-	},
-	playlists: [
-	{
+		name: 'David',
+	    playlists: [
+	     {
 		name: 'tezos',
 		songs: 
-		 [{name:'altcoin', duration: 1345}, 
-		  {name:'treecoin', duration: 1236}, 	
-		  {name:'circlecoin', duration: 7000}] 
+			[{name:'altcoin', duration: 1345}, 
+			{name:'treecoin', duration: 1236}, 	
+			{name:'circlecoin', duration: 7000}] 
 	},
 	{
 		name: 'iota',
 		songs: 
-		 [{name:'altcoin', duration: 1345}, 
-		  {name:'treecoin', duration: 1236}, 	
-		  {name:'circlecoin', duration: 7000}] 
+			[{name:'altcoin', duration: 1345}, 
+			{name:'treecoin', duration: 1236}, 	
+			{name:'circlecoin', duration: 7000}] 
 	},
 	{
 		name: 'ripple',
 		songs: 
-		 [{name:'altcoin', duration: 1345}, 
-		  {name:'treecoin', duration: 1236}, 	
-		  {name:'circlecoin', duration: 7000}]
+			[{name:'altcoin', duration: 1345}, 
+			{name:'treecoin', duration: 1236}, 	
+			{name:'circlecoin', duration: 7000}]
+	    }
+       ]
 	}
-]
 };
 
 class PlaylistCounter extends Component {
 	render() {
 		return (
-			<div style={{...defaultStyle, width: '40%', display: 'inline-block'}}>
+			<div style={{...defaultStyle, width: "40%", display: 'inline-block'}}>
 				<h2>{this.props.playlists.length} playlists</h2>
 			</div>
 		);
 	}
 }
-class HoursCounter extends Component {
-	render() {
-		let allSongs = this.props.playlist.reduce((songs, eachPlaylist) => {
-			return songs.concat(eachPlaylist.songs)
-		}, [])
-		
-		return (
-			<div style={{...defaultStyle, width: '40%', display: 'inline-block'}}>
-				<h2>{allSongs.length} hours</h2>
-			</div>
-		);
-	}
-}
+// class HoursCounter extends Component {
+// 	render() {
+// 		let allSongs = this.props.playlists.reduce((songs, eachPlaylist) => {
+// 			return songs.concat(eachPlaylist.songs)
+// 		}, [])
+// 		let totalDuration = allSongs.reduce((sum, eachSong) => {
+// 			return sum + eachSong.duration
+// 		  }, 0)
+// 		return (
+// 			<div style={{...defaultStyle, width: "40%", display: 'inline-block'}}>
+// 			<h2>{Math.round(totalDuration/60)} hours</h2>
+// 			</div>
+// 		);
+// 	}
+// }
 
 class Filter extends Component {
 	render () {
 		return (
 		<div style={{defaultStyle}}>
 			<img/>
-			<input type="text"/>
+			<input type="text" onKeyUp={event => 
+				this.props.onTextChange(event.target.value)}/>
 		</div>
 		);
 	}
 }
 
 class Playlist extends Component {
-	render () {
-		return (
-			<div style={{...defaultStyle, display: 'inline-block', width: "25%"}}>
-				<img />
-				<h3>Playlist</h3>
-				<ul><li>song</li><li>song</li><li>song</li></ul>
-			</div>
-		);
+	render() {
+	  let playlist = this.props.playlist
+	  return (
+		<div style={{...defaultStyle, display: 'inline-block', width: "25%"}}>
+		  <img />
+		  <h3>{playlist.name}</h3>
+		  <ul>
+			{playlist.songs.map(song => 
+			  <li>{song.name}</li>
+			)}
+		  </ul>
+		</div>
+	  );
 	}
-}
+  }
+  
 
 export default class Home extends Component {
 	constructor() {
 		super();
-		this.state = {serverData: {}}
+		this.state = {serverData: {},
+		filterString: ''
 	}
+}
 	componentDidMount() {
 		setTimeout(() => {
 		this.setState({serverData: fakeServerData});
 	}, 1000);
 	}
-    render() {
+    render() {	
         return (
 			<div className="App">
 				{this.state.serverData.user ?
@@ -101,16 +112,19 @@ export default class Home extends Component {
 			    <h1 style={{...defaultStyle, 'fontSize': '54px'}}>	
 				 {this.state.serverData.user.name}'s Customs Vision
 				</h1>
-					<PlaylistCounter playlists={this.state.serverData.user.playlists}/>
-					<HoursCounter/>
-				<Filter/>
-				<Playlist/>
-				<Playlist/>
-				<Playlist/>
-				<Playlist/>
-			</div> : <h1 style={defaultStyle}>Loading Logo</h1>
-			// <img src={logo}/>
-			}
+				<PlaylistCounter playlists={this.state.serverData.user.playlists}/>
+				{/* <HoursCounter playlists={this.state.serverData.user.playlists}/> */}
+				<Filter onTextChange={text => {
+					this.setState({filterString: text})}
+					}/>
+				{this.state.serverData.user.playlists.filter(playlist =>
+					playlist.name.toLowerCase().includes(
+						this.state.filterString.toLowerCase())
+				).map(playlist => 
+					<Playlist playlist={playlist} />
+				)}
+				</div> : <h1 style={defaultStyle}>Loading...</h1>
+				}
 			</div>
         );
     }
