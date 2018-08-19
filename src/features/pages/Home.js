@@ -1,13 +1,17 @@
 import React, { Component } from 'react';
-import logo from '../Assets/images/logo.svg';
+import 'reset-css/reset.css';
 import '../../App.css';
-
+import LinearProgress from '@material-ui/core/LinearProgress';
 import { Grid, Row, Col, Modal } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
+// USE STYLED-COMPONENETS LIBRARY - 19.08.18
+// https://www.youtube.com/watch?v=qu4U7lwZTRI
 let defaultStyle = {
-	color: '#hhh'
+	color: '#hhh',
+	'font-family': 'Impact'
 };
+
 let fakeServerData = {
 	user: {
 		name: 'Will',
@@ -39,8 +43,14 @@ let fakeServerData = {
 
 class PlaylistCounter extends Component {
 	render() {
+		let playlistCounterStyle = {...defaultStyle, 
+			width: "40%", 
+			display: 'inline-block',
+			'margin-bottom': '10px',
+			'font-size': '14px'
+			}
 		return (
-			<div style={{...defaultStyle, width: "40%", display: 'inline-block'}}>
+			<div style={playlistCounterStyle}>
 				<h2>{this.props.playlists.length} playlists</h2>
 			</div>
 		);
@@ -78,7 +88,8 @@ class Playlist extends Component {
 	render() {
 	  let playlist = this.props.playlist
 	  return (
-		<div style={{...defaultStyle, display: 'inline-block', width: "25%"}}>
+		<div style={{...defaultStyle, 
+		display: 'inline-block', width: "25%"}}>
 		  <img />
 		  <h3>{playlist.name}</h3>
 		  <ul>
@@ -105,14 +116,20 @@ export default class Home extends Component {
 	}, 1000);
 	}
     render() {	
+		let playlistToRender = this.state.serverData.user ? this.state.serverData.user.playlists
 		.filter(playlist =>
 			playlist.name.toLowerCase().includes(
+				this.state.filterString.toLowerCase())
+		) : []
         return (
 			<div className="App">
 				{this.state.serverData.user ?
 				<div>
-			    <h1 style={{...defaultStyle, 'fontSize': '54px'}}>	
-				 {this.state.serverData.user.name}'s Customs Vision
+					<h1 style={{...defaultStyle, 
+						'fontSize': '54px',
+						'margin-top': '20px'						
+						}}>	
+					{this.state.serverData.user.name}'s Customs Vision
 				</h1>
 				<PlaylistCounter playlists={playlistToRender}/>
 				{/* <HoursCounter playlists={this.state.serverData.user.playlists}/> */}
@@ -122,7 +139,7 @@ export default class Home extends Component {
 				{playlistToRender.map(playlist => 
 					<Playlist playlist={playlist} />
 				)}
-				</div> : <h1 style={defaultStyle}>Loading...</h1>
+				</div> : <h1 style={defaultStyle}><LinearProgress /></h1>
 				}
 			</div>
         );
