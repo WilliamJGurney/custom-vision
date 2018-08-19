@@ -105,6 +105,8 @@ export default class Home extends Component {
 	}, 1000);
 	}
     render() {	
+		.filter(playlist =>
+			playlist.name.toLowerCase().includes(
         return (
 			<div className="App">
 				{this.state.serverData.user ?
@@ -112,15 +114,12 @@ export default class Home extends Component {
 			    <h1 style={{...defaultStyle, 'fontSize': '54px'}}>	
 				 {this.state.serverData.user.name}'s Customs Vision
 				</h1>
-				<PlaylistCounter playlists={this.state.serverData.user.playlists}/>
+				<PlaylistCounter playlists={playlistToRender}/>
 				{/* <HoursCounter playlists={this.state.serverData.user.playlists}/> */}
 				<Filter onTextChange={text => {
 					this.setState({filterString: text})}
 					}/>
-				{this.state.serverData.user.playlists.filter(playlist =>
-					playlist.name.toLowerCase().includes(
-						this.state.filterString.toLowerCase())
-				).map(playlist => 
+				{playlistToRender.map(playlist => 
 					<Playlist playlist={playlist} />
 				)}
 				</div> : <h1 style={defaultStyle}>Loading...</h1>
